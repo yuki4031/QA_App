@@ -167,10 +167,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onResume() {
         super.onResume()
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
+        val user = FirebaseAuth.getInstance().currentUser
 
         // 1:趣味を既定の選択とする
         if(mGenre == 0) {
             onNavigationItemSelected(navigationView.menu.getItem(0))
+        }
+
+        //お気に入りタブ非表示
+        if (user == null) {
+            navigationView.menu.findItem(R.id.nav_favorite).isVisible = false
+        } else {
+            navigationView.menu.findItem(R.id.nav_favorite).isVisible = true
         }
     }
 
